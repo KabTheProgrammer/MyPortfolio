@@ -154,19 +154,42 @@
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
 }
 
-@layer utilities {
-  .overflow-hidden {
-    overflow: hidden !important;
-  }
-}
-
-
 #root {
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
   text-align: center;
 }
-body.overflow-hidden {
+/* body.overflow-hidden {
+  overflow: hidden;
+} */
+
+/* html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+} */
+/* .no-scroll {
+  overflow: hidden;
+  height: 100%;
+} */
+html,
+body {
+  height: 100%;
+}
+
+body.no-scroll {
   overflow: hidden;
 }
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* html.no-scroll {
+  overflow: hidden;
+}
+#root {
+  position: relative;
+  z-index: 10; 
+} */

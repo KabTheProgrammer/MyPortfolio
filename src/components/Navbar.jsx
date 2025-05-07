@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   { name: "Home", href: "#hero" },
@@ -17,7 +18,6 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -26,14 +26,12 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.classList.add("overflow-hidden");
+      document.body.classList.add("no-scroll");
     } else {
-      document.body.classList.remove("overflow-hidden");
+      document.body.classList.remove("no-scroll");
     }
-  
-    // Cleanup in case component unmounts while menu is open
-    return () => document.body.classList.remove("overflow-hidden");
   }, [isMenuOpen]);
+
   return (
     <nav
       className={cn(
@@ -47,7 +45,10 @@ const Navbar = () => {
           href="#hero"
         >
           <span className="relative z-10">
-            <span className="text-glow text-foreground"> Kab The Programmer </span>{" "}
+            <span className="text-glow text-foreground">
+              {" "}
+              Kab The Programmer{" "}
+            </span>{" "}
             Portfolio
           </span>
         </a>
@@ -65,23 +66,25 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* mobile nav */}
+        {/* mobile nav and theme toggle */}
+        <div className="flex items-center space-x-4 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="p-2 text-foreground z-50"
+            aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
 
-        <button
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 text-foreground z-50"
-          aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
-        </button>
-
+        {/* mobile menu */}
         <div
           className={cn(
-            "fixed inset-0 bg-background/95 backdroup-blur-md z-40 flex flex-col items-center justify-center",
-            "transition-all duration-300 md:hidden",
+            "fixed inset-0 bg-background/95 z-40 flex flex-col items-center justify-center transition-all duration-300 md:hidden transform",
             isMenuOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
+              ? "opacity-100 scale-100 pointer-events-auto"
+              : "opacity-0 scale-90 pointer-events-none"
           )}
         >
           <div className="flex flex-col space-y-8 text-xl">
@@ -102,4 +105,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar
+export default Navbar;
